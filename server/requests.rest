@@ -1,0 +1,13 @@
+get http://127.0.0.1:8000/
+
+###
+POST http://127.0.0.1:8000/login
+Content-Type: application/json
+
+{
+  "username": "mulitet4"
+}
+
+###
+get http://127.0.0.1:8000/urls
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibXVsaXRldDQiLCJpYXQiOjE3MTgxNDMwNzV9.4mrb2k5FVHX-YLO-J80f3kb9qNek1Si_8D3wDqhag50
