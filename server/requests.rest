@@ -1,13 +1,29 @@
-get http://127.0.0.1:8000/
-
-###
-POST http://127.0.0.1:8000/login
+### User Registration
+POST http://localhost:8000/api/users/register
 Content-Type: application/json
 
 {
-  "username": "mulitet4"
+  "email": "testuser@example.com",
+  "password": "securepassword"
 }
 
-###
-get http://127.0.0.1:8000/urls
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibXVsaXRldDQiLCJpYXQiOjE3MTgxNDMwNzV9.4mrb2k5FVHX-YLO-J80f3kb9qNek1Si_8D3wDqhag50
+### User Login
+POST http://localhost:8000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "securepassword"
+}
+
+### Create Shortened URL (Replace <token> with the JWT obtained from login)
+POST http://localhost:8000/api/urls/shorten
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcyMDMwODc2NCwiZXhwIjoxNzIwMzEyMzY0fQ.QgSIfgC9QYvDrTFX5RCp5sZGJzBvooB5ooF_S7pitcU
+
+{
+  "originalUrl": "https://google.com"
+}
+
+### Get Original URL (Replace <shortenedUrl> with the actual shortened URL obtained from creation)
+GET http://localhost:8000/api/urls/1WUQW9
