@@ -19,11 +19,16 @@ Content-Type: application/json
 ### Create Shortened URL (Replace <token> with the JWT obtained from login)
 POST http://localhost:8000/api/urls/shorten
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcyMDMwODc2NCwiZXhwIjoxNzIwMzEyMzY0fQ.QgSIfgC9QYvDrTFX5RCp5sZGJzBvooB5ooF_S7pitcU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcyMDkwODk3MCwiZXhwIjoxNzIwOTEyNTcwfQ.Hgtk8G384i-kRceUP37WxkUgX5IDbkVzlIIGuJOhBX8
 
 {
   "originalUrl": "https://google.com"
 }
+
+### Get Urls of the original user
+GET http://localhost:8000/api/urls/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcyMDkwODk3MCwiZXhwIjoxNzIwOTEyNTcwfQ.Hgtk8G384i-kRceUP37WxkUgX5IDbkVzlIIGuJOhBX8
+
 
 ### Get Original URL (Replace <shortenedUrl> with the actual shortened URL obtained from creation)
 GET http://localhost:8000/api/urls/1WUQW9

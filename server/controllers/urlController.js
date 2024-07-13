@@ -3,6 +3,35 @@ import { nanoid } from 'nanoid';
 
 const prisma = new PrismaClient();
 
+const getUrlsOfUser = async (req, res) => {
+  try {
+    const userShortenedUrls = await prisma.shortenedUrl.findMany({
+      where: {
+        userId: req.user.userId,
+      },
+    });
+    res.status(201).json({ urls: userShortenedUrls });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create shortened URL' });
+  }
+};
+
+const deleteUrlbyId = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const userShortenedUrls = await prisma.shortenedUrl.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(201).json({ urls: userShortenedUrls });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Failed to delete URL' });
+  }
+};
+
 const createShortenedUrl = async (req, res) => {
   const { originalUrl } = req.body;
   const shortenedUrl = nanoid(6);
@@ -46,4 +75,4 @@ const getOriginalUrl = async (req, res) => {
   }
 };
 
-export { createShortenedUrl, getOriginalUrl };
+export { createShortenedUrl, getOriginalUrl, getUrlsOfUser, deleteUrlbyId };
