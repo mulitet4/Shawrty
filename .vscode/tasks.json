@@ -8,7 +8,6 @@
       "problemMatcher": [],
       "label": "npm run client dev",
       "detail": "next dev",
-      "runOptions": { "runOn": "folderOpen" },
       "isBackground": true
     },
     {
@@ -18,7 +17,6 @@
       "problemMatcher": [],
       "label": "npm run server dev",
       "detail": "nodemon main.js",
-      "runOptions": { "runOn": "folderOpen" },
       "isBackground": true
     },
     {
@@ -28,10 +26,10 @@
       "presentation": {
         "reveal": "silent",
         "panel": "new"
-      },
-      "runOptions": {
-        "runOn": "folderOpen"
       }
+      // "runOptions": {
+      //   "runOn": "folderOpen"
+      // }
     }
   ]
 }

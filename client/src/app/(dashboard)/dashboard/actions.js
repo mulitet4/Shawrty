@@ -1,10 +1,10 @@
-async function get(token) {
+'use client';
+
+async function getUrls(token) {
   try {
     const response = await fetch('http://localhost:8000/api/urls', {
       method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+      credentials: 'include',
     });
 
     const json = await response.json();
@@ -14,7 +14,7 @@ async function get(token) {
   }
 }
 
-async function remove(token, id) {
+async function removeUrls(token, id) {
   try {
     const response = await fetch('http://localhost:8000/api/urls/' + id, {
       method: 'DELETE',
@@ -30,7 +30,7 @@ async function remove(token, id) {
   }
 }
 
-async function add(token, url) {
+async function addUrls(token, url) {
   try {
     const response = await fetch('http://localhost:8000/api/urls/shorten', {
       method: 'POST',
@@ -50,4 +50,4 @@ async function add(token, url) {
   }
 }
 
-export { add, remove, get };
+export { addUrls, removeUrls, getUrls };

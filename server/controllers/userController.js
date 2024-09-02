@@ -24,7 +24,6 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await prisma.user.findUnique({
       where: { email },
@@ -32,7 +31,11 @@ const login = async (req, res) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '10d',
+      });
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
       });
       res.json({ token });
     } else {
@@ -44,4 +47,9 @@ const login = async (req, res) => {
   }
 };
 
-export { register, login };
+const logout = (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Logout successful' });
+};
+
+export { register, login, logout };
