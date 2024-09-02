@@ -4,9 +4,9 @@ import {
   deleteUrlbyId,
   getOriginalUrl,
   getUrlsOfUser,
-} from '../controllers/urlController.js';
-import { validateUrl } from '../middleware/validateUrl.js';
-import { authenticateToken } from '../middleware/authMiddleware.js';
+} from '../controllers/url.js';
+import { validateUrl } from '../middleware/url.js';
+import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 

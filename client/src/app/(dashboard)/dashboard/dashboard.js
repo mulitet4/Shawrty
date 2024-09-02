@@ -7,6 +7,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from '@radix-ui/react-icons';
+
 import {
   Dialog,
   DialogContent,
@@ -16,26 +17,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
+
 import { addUrls, getUrls, removeUrls } from './actions';
-import Cookies from 'js-cookie';
 
 const iconSize = 18;
 
 const Dashboard = ({ token }) => {
+  const { toast } = useToast();
+
   const [userToken, setUserToken] = useState();
   const [loading, setLoading] = useState(true);
   const [urls, setUrls] = useState([]);
   const [addUrl, setAddUrl] = useState('');
 
   async function handleAdd() {
-    const add_response = await addUrls(token, 'https://google.com');
-    const response = await get(token);
+    const add_response = await addUrls(token, addUrl);
+    const response = await getUrls(token);
     setUrls(response.urls);
   }
 
   async function handleDelete(id) {
     const delete_response = await removeUrls(token, id);
-    const response = await get(token);
+    const response = await getUrls(token);
     setUrls(response.urls);
   }
 
@@ -114,22 +118,45 @@ const Dashboard = ({ token }) => {
       </section>
 
       {/* URLs */}
-      <section id='urls' className='grid grid-cols-3 gap-2 mt-2 w-full'>
+      <section
+        id='urls'
+        className='grid grid-cols-1 md:grid-cols-3 gap-2 mt-2 w-full'
+      >
         {!loading &&
           urls.map((urlObj) => {
             return (
               <div
+                key={urlObj.id}
                 id='card'
-                className='flex flex-row justify-between bg-primary-foreground p-4 rounded-md space-x-3'
+                className='flex flex-col md:flex-row justify-between bg-primary-foreground p-4 rounded-md md:space-x-3'
               >
                 <div className='flex flex-col'>
                   <a href={urlObj.originalUrl}>{urlObj.originalUrl}</a>
-                  <a className='text-muted' href={urlObj.originalUrl}>
-                    https://shawrty.vercel.app/{urlObj.shortenedUrl}
+                  <a
+                    className='text-muted'
+                    target='_blank'
+                    referrerPolicy='no-referrer'
+                    href={
+                      process.env.NEXT_PUBLIC_API_URL +
+                      '/api/urls/' +
+                      urlObj.shortenedUrl
+                    }
+                  >
+                    {urlObj.shortenedUrl}
                   </a>
                 </div>
-                <div className='flex flex-col items-center justify-between'>
+                <div className='flex flex-row md:flex-col items-center md:justify-between'>
                   <CopyIcon
+                    onClick={async () => {
+                      await navigator.clipboard.writeText(
+                        process.env.NEXT_PUBLIC_API_URL +
+                          '/api/urls/' +
+                          urlObj.shortenedUrl
+                      );
+                      toast({
+                        title: 'Copied to clipboard',
+                      });
+                    }}
                     className='cursor-pointer'
                     height={iconSize}
                     width={iconSize}

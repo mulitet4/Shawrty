@@ -21,6 +21,7 @@ async function removeUrls(token, id) {
       headers: {
         Authorization: 'Bearer ' + token,
       },
+      credentials: 'include',
     });
 
     const json = await response.json();
@@ -39,14 +40,15 @@ async function addUrls(token, url) {
         Authorization: 'Bearer ' + token,
       },
       body: JSON.stringify({
-        originalUrl: 'https://google.com',
+        originalUrl: url,
       }),
+      credentials: 'include',
     });
 
     const json = await response.json();
     return json;
   } catch (error) {
-    console.error(error);
+    console.error(await error.json());
   }
 }
 
