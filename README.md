@@ -4,7 +4,9 @@
 
 Shawrty is a URL Shortener built using (M*)ERN Stack. [* Uses Prisma ORM using sqlite, but migrating to mongo using Prisma is a simple task].
 
-![alt text](assets/home.png)
+![Shawrty Home](assets/home.png)
+
+![Shawrty Login](assets/login.png)
 
 ![Shawrty Dashboard](assets/console.png)
 

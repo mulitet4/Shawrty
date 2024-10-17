@@ -19,7 +19,9 @@ const Home = () => {
           <Link href={'#features'}>About</Link>
         </div>
         <div>
-          <button className='px-5 py-1 rounded-3xl bg-primary'>Login</button>
+          <a href='/login' className='px-5 py-1 rounded-3xl bg-primary'>
+            Login
+          </a>
         </div>
       </nav>
 

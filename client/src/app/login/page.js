@@ -44,26 +44,48 @@ export default function LoginPage() {
   async function signUp(formData) {}
 
   return (
-    <form>
-      <label htmlFor='email'>Email:</label>
-      <input id='email' name='email' type='email' required />
-      <label htmlFor='password'>Password:</label>
-      <input id='password' name='password' type='password' required />
-      <button
-        formAction={(e) => {
-          login(e);
-        }}
-      >
-        Log in
-      </button>
-      <button
-        formAction={(e) => {
-          signUp(e);
-        }}
-      >
-        Sign up
-      </button>
-      {loginMutation.isPending && <div>Loading..</div>}
-    </form>
+    <div className='h-svh flex flex-col items-center justify-center'>
+      <form className='flex flex-col items-center justify-center space-y-2'>
+        <div className='space-x-2'>
+          <label htmlFor='email'>Email:</label>
+          <input
+            className='bg-transparent rounded-md border-2 border-primary p-1'
+            id='email'
+            name='email'
+            type='email'
+            required
+          />
+        </div>
+        <div className='space-x-2'>
+          <label htmlFor='password'>Password:</label>
+          <input
+            className='bg-transparent rounded-md border-2 border-primary p-1'
+            id='password'
+            name='password'
+            type='password'
+            required
+          />
+        </div>
+        <div className='space-x-2'>
+          <button
+            className='bg-primary rounded-md px-3 py-1'
+            formAction={(e) => {
+              login(e);
+            }}
+          >
+            Log in
+          </button>
+          <button
+            className='bg-primary rounded-md px-3 py-1'
+            formAction={(e) => {
+              signUp(e);
+            }}
+          >
+            Sign up
+          </button>
+        </div>
+        {loginMutation.isPending && <div>Loading..</div>}
+      </form>
+    </div>
   );
 }
