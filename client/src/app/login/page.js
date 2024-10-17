@@ -1,29 +1,44 @@
 'use client';
+import { useMutation } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '@/lib/slices/authSlice';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  async function login(formData) {
-    try {
-      let data = await fetch('http://localhost:8000/api/users/login', {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
+
+  const loginMutation = useMutation({
+    mutationFn: async ({ email, password }) => {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: formData.get('email'),
-          password: formData.get('password'),
+          email,
+          password,
         }),
         credentials: 'include',
       });
-
-      if (data.status != 200) {
-        return;
+      if (!response.ok) {
+        throw new Error('Login failed');
       }
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      dispatch(authActions.login(data));
+      router.push('/dashboard');
+    },
+  });
 
-      window.location.replace('/dashboard');
-    } catch (e) {
-      console.error(e);
-    }
+  async function login(formData) {
+    const email = formData.get('email');
+    const password = formData.get('password');
+    loginMutation.mutate({ email, password });
   }
 
   async function signUp(formData) {}
@@ -48,6 +63,7 @@ export default function LoginPage() {
       >
         Sign up
       </button>
+      {loginMutation.isPending && <div>Loading..</div>}
     </form>
   );
 }

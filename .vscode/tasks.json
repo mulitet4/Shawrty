@@ -2,34 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
-      "script": "dev",
-      "path": "client",
-      "problemMatcher": [],
-      "label": "npm run client dev",
-      "detail": "next dev",
-      "isBackground": true
-    },
-    {
-      "type": "npm",
-      "script": "dev",
-      "path": "server",
-      "problemMatcher": [],
-      "label": "npm run server dev",
-      "detail": "nodemon main.js",
-      "isBackground": true
-    },
-    {
-      "label": "open dev sites",
+      "label": "Open Workspace",
       "type": "shell",
-      "command": "start http://localhost:3000 && start http://127.0.0.1:8000 && exit",
-      "presentation": {
-        "reveal": "silent",
-        "panel": "new"
+      "command": "code ${workspaceFolderBasename}.code-workspace",
+      "runOptions": {
+        "runOn": "folderOpen"
       }
-      // "runOptions": {
-      //   "runOn": "folderOpen"
-      // }
     }
   ]
 }

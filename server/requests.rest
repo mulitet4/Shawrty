@@ -1,5 +1,5 @@
 ### User Registration
-POST http://localhost:8000/api/users/register
+POST https://shawrty-api.vercel.app/api/users/register
 Content-Type: application/json
 
 {
