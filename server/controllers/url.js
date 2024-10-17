@@ -51,12 +51,12 @@ const createShortenedUrl = async (req, res) => {
 };
 
 const getOriginalUrl = async (req, res) => {
-  const { url } = req.params;
+  const { id } = req.params;
 
   try {
     const urlRecord = await prisma.shortenedUrl.findUnique({
       where: {
-        shortenedUrl: url,
+        shortenedUrl: id,
       },
     });
 
@@ -65,7 +65,7 @@ const getOriginalUrl = async (req, res) => {
         where: { id: urlRecord.id },
         data: { clickCount: { increment: 1 } },
       });
-      res.redirect(urlRecord.originalUrl);
+      res.status(200).json({ originalUrl: urlRecord.originalUrl });
     } else {
       res.status(404).json({ error: 'Shortened URL not found' });
     }

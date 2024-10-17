@@ -65,10 +65,11 @@ const Dashboard = () => {
     },
     onError: (error) => {
       console.log(error);
-      // toast(error.message);
+      toast({ title: error.response.data.error });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['urls', 'get'] });
+      toast({ title: 'Successfully added URL' });
     },
   });
 
@@ -84,11 +85,11 @@ const Dashboard = () => {
       });
     },
     onError: (error) => {
-      console.log(error);
-      toast(error.message);
+      toast({ title: error.response.data.error });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['urls', 'get'] });
+      toast({ title: 'Successfully deleted URL' });
     },
   });
 
@@ -110,6 +111,16 @@ const Dashboard = () => {
             <div
               id='add'
               className='p-5 bg-primary-foreground rounded-lg cursor-pointer'
+              onClick={async () => {
+                let copied = await navigator.clipboard.readText();
+                let validUrl;
+                try {
+                  validUrl = new URL(copied);
+                } catch (e) {}
+                if (validUrl) {
+                  setAddUrlData(copied);
+                }
+              }}
             >
               <PlusIcon></PlusIcon>
             </div>
@@ -124,6 +135,7 @@ const Dashboard = () => {
             </DialogHeader>
             <div className='py-4'>
               <input
+                value={addUrlData}
                 onChange={(e) => {
                   setAddUrlData(e.target.value);
                 }}
@@ -183,14 +195,21 @@ const Dashboard = () => {
                 className='flex flex-col md:flex-row justify-between bg-primary-foreground p-4 rounded-md md:space-x-3'
               >
                 <div className='flex flex-col'>
-                  <a href={urlObj.originalUrl}>{urlObj.originalUrl}</a>
+                  <a
+                    className='overflow-hidden break-all'
+                    href={urlObj.originalUrl}
+                  >
+                    {urlObj.originalUrl}
+                  </a>
                   <a
                     className='text-muted'
                     target='_blank'
                     referrerPolicy='no-referrer'
                     href={
-                      process.env.NEXT_PUBLIC_API_URL +
-                      '/api/urls/' +
+                      location.protocol +
+                      '//' +
+                      location.host +
+                      '/url?id=' +
                       urlObj.shortenedUrl
                     }
                   >
@@ -201,8 +220,10 @@ const Dashboard = () => {
                   <CopyIcon
                     onClick={async () => {
                       await navigator.clipboard.writeText(
-                        process.env.NEXT_PUBLIC_API_URL +
-                          '/api/urls/' +
+                        location.protocol +
+                          '//' +
+                          location.host +
+                          '/url?id=' +
                           urlObj.shortenedUrl
                       );
                       toast({

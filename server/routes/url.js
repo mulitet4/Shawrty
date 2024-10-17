@@ -13,6 +13,6 @@ const router = express.Router();
 router.post('/shorten', authenticateToken, validateUrl, createShortenedUrl);
 router.get('/', authenticateToken, getUrlsOfUser);
 router.delete('/:id', authenticateToken, deleteUrlbyId);
-router.get('/:url', getOriginalUrl);
+router.get('/:id', getOriginalUrl);
 
 export default router;
