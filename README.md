@@ -28,13 +28,13 @@ There are a few features that are left to implement (which maybe never will be c
 #### Client
 
 - [x] Login
-- [] Sign Up
+- [ ] Sign Up
 - [x] Shorten URL
 - [x] Delete Shortened URL
 - [x] Copy Shortened URL
-- [] Edit Shortened URL
+- [ ] Edit Shortened URL
 - [x] Redirect to Original URL
-- [] Settings Page
+- [ ] Settings Page
 
 #### Server
 
@@ -43,4 +43,18 @@ There are a few features that are left to implement (which maybe never will be c
 - [x] Shorten URL
 - [x] Delete Shortened URL
 - [x] Copy Shortened URL
-- [] Edit Shortened URL
+- [ ] Edit Shortened URL
+
+### Run It Yourself
+
+#### Client
+
+- `cd client`
+- `npm i`
+- `npm run dev`
+
+#### Server
+
+- `cd server`
+- `npm i`
+- `npm run dev`
