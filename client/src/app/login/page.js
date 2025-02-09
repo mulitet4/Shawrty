@@ -9,23 +9,51 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
 
   const loginMutation = useMutation({
     mutationFn: async ({ email, password }) => {
-      const response = await fetch(process.env.NEXT_PUBLIC_API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        credentials: 'include',
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + '/api/users/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+          credentials: 'include',
+        }
+      );
       if (!response.ok) {
         throw new Error('Login failed');
+      }
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      dispatch(authActions.login(data));
+      router.push('/dashboard');
+    },
+  });
+
+  const registerMutation = useMutation({
+    mutationFn: async ({ email, password }) => {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + '/api/users/register',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error('Register failed');
       }
       return await response.json();
     },
@@ -41,7 +69,11 @@ export default function LoginPage() {
     loginMutation.mutate({ email, password });
   }
 
-  async function signUp(formData) {}
+  async function signUp(formData) {
+    const email = formData.get('email');
+    const password = formData.get('password');
+    registerMutation.mutate({ email, password });
+  }
 
   return (
     <div className='h-svh flex flex-col items-center justify-center'>

@@ -4,7 +4,7 @@ import {
   deleteUrlbyId,
   getOriginalUrl,
   getUrlsOfUser,
-} from '../controllers/url.js';
+} from '../controllers/url.controller.js';
 import { validateUrl } from '../middleware/url.js';
 import { authenticateToken } from '../middleware/auth.js';
 

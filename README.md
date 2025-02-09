@@ -30,7 +30,7 @@ There are a few features that are left to implement (which maybe never will be c
 #### Client
 
 - [x] Login
-- [ ] Sign Up
+- [x] Sign Up
 - [x] Shorten URL
 - [x] Delete Shortened URL
 - [x] Copy Shortened URL
